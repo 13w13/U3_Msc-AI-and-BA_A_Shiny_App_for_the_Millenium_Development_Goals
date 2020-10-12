@@ -301,7 +301,7 @@ goalD[Country_Name=="France"] %>% head
 
 
 
-## 2.4 Aggregation View 
+### 2.4 Aggregation View 
 
 ### 2.4.1 Create mean of each Region each Year
 The input in the for indicator will be an user input
