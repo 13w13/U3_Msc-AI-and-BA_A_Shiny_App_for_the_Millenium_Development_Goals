@@ -1,7 +1,7 @@
 # U3_Msc-AI-and-BA_A_Shiny_App_for_the_Millenium_Development_Goals
 Julieva Cohen, Alexandra Amiens, Antoine Settelen, Simon Weiss
 
-Shiny app link : https://thirteen.shinyapps.io/Millenium_Dev_Goals/
+Shiny app link : https://thirteen.shinyapps.io/Millenium_Dev_Goals/   
 Data Processing link : https://13w13.github.io/U3_Msc-AI-and-BA_A_Shiny_App_for_the_Millenium_Development_Goals/
 
 ---
