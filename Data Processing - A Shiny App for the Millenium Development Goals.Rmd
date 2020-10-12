@@ -53,7 +53,7 @@ http://datatopics.worldbank.org/mdgs/trends-and-projections-of-each-mdg-indicato
 http://datatopics.worldbank.org/sdgs/
 
 
-#Example of outline
+### Example of outline
 
     Create two Plots: one with death per capita, one with death in absolute numbers. Hint: From coronaD, create a new data table with death per capita instead of death.
 
@@ -407,7 +407,7 @@ head(WDI_metadata)
 melt(goalD)
 ```
 
-##3 Creating plots
+## 3 Creating plots
 ### 3.1 Casting from a wide table to a long table:
 
 3.1.1 For goalD table
@@ -489,7 +489,7 @@ PlotDT_Other$Date = PlotDT_Other$Date%>%  as.Date(format = "%Y")
 
 
 
-###3.2 Create basic Plot
+### 3.2 Create basic Plot
 
 
 ```{r}
@@ -499,7 +499,7 @@ ggplot() +
 ```
 
 
-#Test other from income group
+Test other from income group
 ```{r}
 ggplot() +
       geom_line(data=PlotDT[`Country_Name`=="China" &`Series_Name.x`=="GDP (current US$)"], aes(x=Date, y=Value,colour=" Selected Country"))+ geom_line(data=PlotDT_Income_group[`Series_Name.x`=="GDP (current US$)"], aes(x= Date, y = Value,colour = `Income_group`))
