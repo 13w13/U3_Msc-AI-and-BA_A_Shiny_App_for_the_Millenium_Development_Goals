@@ -1,9 +1,12 @@
 ---
-title: "A Shiny App for the Millenium Development Goals"
+title: "Data Processing - A Shiny App for the Millenium Development Goals"
 author: "Julieva Cohen, Alexandra Amiens, Antoine Settelen, Simon Weiss"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document :
+   keep_md: true
 ---
+
 
 # Navigation {.tabset .tabset-fade .tabset-pills}
 ## 1. Introduction
@@ -37,12 +40,12 @@ Data on Millennium Development Goals (MDG) indicator trends for developing count
 
 In order to have an aggreted data, we have used a very rich database provided by **Driven Data** offering an open challenge until 2021 with data compiled from the http://www.worldbank.org/ website. The description below of the MDG below comes from their plateforme. 
 
-Driven Data aggregated  data from 1972-2007 on over 1200 macroeconomic indicators in 214 countries around the world. A random snapshot of the data looks like the below. Each row represents a timeseries for a specific indicator and country. The row has an id, a country name, a series code, a series name, and data for the years 1972 - 2007.
+Driven Data aggregated  data from 1972-2007 on over 1200 macroeconomic indicators in 214 countries around the world. Each row represents a timeseries for a specific indicator and country. The row has an id, a country name, a series code, a series name, and data for the years 1972 - 2007.   
 
 
 
 We hope that this presentation allowed to understand our project and the real usefulness of a shiny app! 
-Indeed, building interactive dashboards offers the possibility to explore the evolution trend for each country and/or region of the world, to compare them both for each macroeconomic indicator but also for each millennium goal.
+Indeed, building interactive dashboards offers the possibility to explore the evolution trend for each country and/or region of the world, to compare them both for each macroeconomic indicator but also for each millennium goal.   
 
 ### 1.3 Examples found of target data visualization for our project
 http://datatopics.worldbank.org/mdgs/trends-and-projections-of-each-mdg-indicator-for-each-country.html
@@ -50,23 +53,7 @@ http://datatopics.worldbank.org/mdgs/trends-and-projections-of-each-mdg-indicato
 http://datatopics.worldbank.org/sdgs/
 
 
-
-
-### 1.4 Outilne used for data preparation 
-
-Deal with Missing Values : ok 
-Rename column : OK
-Casting from a wide table to a long table : OK
-Add the 8 global Goal
-
-transformation into Time Series : Needed ? 
-
-Add region ? 
-
-
-### 1.5 Outilne used for our app dev 
-
-#Example of outine from the prof
+#Example of outline
 
     Create two Plots: one with death per capita, one with death in absolute numbers. Hint: From coronaD, create a new data table with death per capita instead of death.
 
@@ -102,15 +89,6 @@ library(dplyr)
 ```
 
 
-
-
-
-XLM en csv avec ID + l
-df value
-
-right join NA Value
-
-XLM
 
 ### 2.1 Loading Files
 ```{r}
@@ -154,13 +132,13 @@ Dates = (colnames(goalD[,!(c(1,38,39,40))]))
 
 
 ### 2.2 Building up Goals - Topics and Sub-Topics
-Count uniqe macroindicator by Series Name and Series Code
+Count unique macroindicator by Series Name and Series Code
 
 ```{r}
 goalD[,.N,(goalD$Series_Name)]
 goalD[,.N,(goalD$Series_Code)]
 ```
-There is 1305 unique Series Name and Series Code
+There are 1305 unique Series Name and Series Code
 
 Class what are the most frequent macroindicators
 ```{r}
@@ -186,7 +164,6 @@ We should merge them into the first column. So we copy content of second colomun
 ```{r}
 metrics$V1 <- apply(metrics, 1, function(x) paste(str_trim(x[!is.na(x)]), collapse=""))
 ```
-Remove parenthesis
 
 ```{r}
 metrics %>% head
@@ -204,11 +181,6 @@ We can then add new column to goalD.
 goalD$Metrics<-metrics$V1
 goalD %>% head
 ```
-
-#Add cosmetic step (if we have times)
-Remove metrics in Series_Name
-
-
 
 We need to add new row with the attached Goal for each indicators in order to have a global view of each indicators. 
 To do that, we need to add another ressource to our data : mapping from the World Bank. 
@@ -250,11 +222,11 @@ Some Series Code (those in miniscule and numbers are not codded in World Bank Br
 goalD_old <-goalD
 goalD <- merge(goalD,WDI_break, by.x = 'Series_Code', by.y = 'Series_Code', all = FALSE)
 ```
-Compte removed observations
+Count removed observations
 ```{r}
 dim(goalD_old)-dim(goalD)
 ```
-We have removed 13 677 observation due to missing informations in our coding tables. 
+We have removed 13 677 observations due to missing informations in our coding tables. 
 
 
 We can remove 1 dupicated Series_Name from our dataset
@@ -285,7 +257,7 @@ The idea for the final Shiny app is to propose selection of aggregaed Countries 
 
 
 The Column E and the Row 6 from our excel file were empty. We can remove them. 
-Furthermore, we can deleate Code information from our table and remplace space in colname by an inderscore. 
+Furthermore, we can void Code information from our table and remplace space in colname by an inderscore. 
 
 ```{r}
 #Extract iso code for later map
@@ -515,20 +487,10 @@ Change data type
 PlotDT_Other$Date = PlotDT_Other$Date%>%  as.Date(format = "%Y")
 ```
 
-### 
-```{r}
-
-```
-
 
 
 ###3.2 Create basic Plot
 
-
-Good good one
-
-input user: choix de l'aggregation
-Donc dans geo_line : data=PloDT_$userimput1["Series_Name.x"==$userinput] avec colour=$userinput1
 
 ```{r}
 ggplot() +
@@ -537,11 +499,7 @@ ggplot() +
 ```
 
 
-
-#add metrics + view value for yeach year (shiny app)
-
-
-#Test autre aggre : income group
+#Test other from income group
 ```{r}
 ggplot() +
       geom_line(data=PlotDT[`Country_Name`=="China" &`Series_Name.x`=="GDP (current US$)"], aes(x=Date, y=Value,colour=" Selected Country"))+ geom_line(data=PlotDT_Income_group[`Series_Name.x`=="GDP (current US$)"], aes(x= Date, y = Value,colour = `Income_group`))
@@ -553,32 +511,7 @@ ggplot() +
       geom_line(data=PlotDT[`Country_Name`=="China" &`Series_Name.x`=="GDP (current US$)"], aes(x=Date, y=Value,colour=" Selected Country"))+ geom_line(data=PlotDT_Income_group[`Series_Name.x`=="GDP (current US$)"], aes(x= Date, y = Value,colour = `Income_group`))
 
 ```
-
-
-
-
-
-## Shiny
-
-
-It's also possible to embed an entire Shiny application within an R Markdown document using the `shinyAppDir` function. This example embeds a Shiny application located in another directory:
-
-```{r}
-shinyAppDir("C:/Users/swp/Documents/_Perso/Cours/M2/U3. Programing/Advanced R/0.Group Project/Shiny Project/Shiny/",
-  options = list(
-    width = "100%", height = 550
-  )
-)
-```
-
-
-
-
-
-Note the use of the `height` parameter to determine how much vertical space the embedded application should occupy.
-
-You can also use the `shinyApp` function to define an application inline rather then in an external directory.
-
-In all of R code chunks above the `echo = FALSE` attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.
+All good. 
+We can now pass to the Shiny app.R ! 
 
 
