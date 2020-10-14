@@ -28,14 +28,14 @@ metrics <- as.data.frame(str_extract_all(goalD$Series_Name, "\\([^()]+\\)", simp
 unique(metrics[,2])
 metrics$V1 <- apply(metrics, 1, function(x) paste(str_trim(x[!is.na(x)]), collapse=""))
 goalD$Metrics<-metrics$V1
-urlfile_WDI_break="http://databank.worldbank.org/data/download/site-content/WDI_CETS.xls"
+urlfile_WDI_break="https://drive.google.com/uc?export=download&id=1eu92j-5ozDeMm-Tu1Wz9sSFKAnrz8JNe"
 GET(urlfile_WDI_break, write_disk(tf <- tempfile(fileext = ".xls")))
 WDI_break <- read_xls(tf, sheet=2) %>% as.data.table 
 colnames(WDI_break) =  colnames(WDI_break) %>% gsub(" ","_",.) 
 goalD <- merge(goalD,WDI_break, by.x = 'Series_Code', by.y = 'Series_Code', all = FALSE)
 goalD<-goalD[,!42]
 colnames(goalD[,40])="Series_Name"
-urlfile_Country_break="http://databank.worldbank.org/data/download/site-content/CLASS.xls"
+urlfile_Country_break="https://drive.google.com/uc?export=download&id=1mrykesjoTt8SBiHWnm7xDPYS-Siu1nD4"
 GET(urlfile_Country_break, write_disk(tf <- tempfile(fileext = ".xls")))
 Country_break <- read_xls(tf, range="C5:I224", sheet=1) %>% as.data.table 
 Code_break<-Country_break[,c(1,2)] %>% setDT
