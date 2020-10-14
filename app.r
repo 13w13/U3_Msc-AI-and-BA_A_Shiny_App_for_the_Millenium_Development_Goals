@@ -54,9 +54,9 @@ flags <- read.csv("https://raw.githubusercontent.com/13w13/A_Shiny_App_for_the_M
 cols2<-c("Country_Name","Images.File.Name","ImageURL")
 colnames(flags)=cols2        
 PlotDT_Flags <- merge(goalD, flags,by.x = 'Country_Name', by.y = 'Country_Name', all= FALSE)
-urlfile_WDI_metadata="https://databank.worldbank.org/metadata/glossary_download.aspx?DbID=2&Concept=series&SearchTxt=&DBname=World%20Development%20Indicators"
-GET(urlfile_WDI_metadata, write_disk(tf <- tempfile(fileext = ".xls")))
-WDI_metadata <- read_xls(tf, range="A1:D1438", sheet=2) %>% as.data.table 
+urlfile_WDI_metadata="https://drive.google.com/uc?export=download&id=1wHNeRYOh4ajzPOea3sg-hlk93IngChk0"
+GET(urlfile_WDI_metadata,  mode="wb",write_disk(tf <- tempfile(fileext = ".xlsx")))
+WDI_metadata <- read_xlsx(tf, range="C1:N1438", sheet=3) %>% as.data.table 
 head(WDI_metadata)
 PlotDT = data.table::melt(goalD, id.vars = c(1,2,3,40,41,42,43,44,45,46,47,48,49), 
                           measure.vars = Dates, 
@@ -335,8 +335,10 @@ server <- function(input, output, session) {
   output$text<-renderUI({
     
     Long_definition<-paste("Definition : ",WDI_metadata[`Indicator Name`==input$indicator][,3])
-    Source<-paste("Source : ", WDI_metadata[`Indicator Name`==input$indicator][,4])
-    HTML(paste(Long_definition,Source,sep='<p/>'))
+    Source<-paste("Source : ", WDI_metadata[`Indicator Name`==input$indicator][,12])
+    Limitation<-paste("Limitation and exceptions : ",WDI_metadata[`Indicator Name`==input$indicator][,9])
+    
+    HTML(paste(Long_definition,Source,Limitation,sep='<p/>'))
   })
   
   
