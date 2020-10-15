@@ -30,7 +30,7 @@ The eight goals are:
     To combat HIV/AIDS, malaria, and other diseases
     To ensure environmental sustainability
     To develop a global partnership for development
-
+![MDG](https://insashley9g.files.wordpress.com/2016/09/mdgs1.jpg?w=1140)
 
 Data on Millennium Development Goals (MDG) indicator trends for developing countries and for different groups of countries are curated in the World Development Indicators database. Each year the World Bank uses these data to assess the progress made towards the MDGs.    
 
