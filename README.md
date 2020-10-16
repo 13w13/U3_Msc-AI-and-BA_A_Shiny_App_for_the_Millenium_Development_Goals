@@ -5,6 +5,7 @@ Shiny app link : https://thirteen.shinyapps.io/Millenium_Dev_Goals/
 Data Processing link : https://13w13.github.io/U3_Msc-AI-and-BA_A_Shiny_App_for_the_Millenium_Development_Goals/
 
 ---
+~1 week development  
 
 ## 1. Introduction
 
